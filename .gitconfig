@@ -1,0 +1,11 @@
+# This is Git's per-user configuration file.
+[user]
+# Please adapt and uncomment the following lines:
+	name = ryicoh
+	email = ryicoh@gmail.com
+[pull]
+	ff = only
+[core]
+	editor = nvim
+[init]
+	defaultBranch = main
