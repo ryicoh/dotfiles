@@ -166,9 +166,6 @@ set signcolumn=yes
 " 畳むやつは使わない
 set nofoldenable
 
-" vimでdeleteが効くように
-set backspace=indent,eol,start
-
 " 検索のハイライトを消す
 nmap <space>/ <Cmd>nohlsearch<CR>
 
@@ -183,3 +180,14 @@ cabbrev W update
 " tabを>-にする
 set list
 set listchars=tab:>-
+
+" defaults.vim
+set incsearch
+
+" タイムアウト
+set ttimeout
+set ttimeoutlen=100
+
+" vimでdeleteが効くように
+set backspace=indent,eol,start
+
