@@ -1,9 +1,37 @@
+let start_time = reltime()
+
 call plug#begin('~/.config/nvim/plugged')
     " deno系プラグインを使うためのやつ
     Plug 'vim-denops/denops.vim'
 
-    " 移動
-    Plug 'ggandor/lightspeed.nvim'
+    Plug 'yuki-yano/fuzzy-motion.vim'
+    nnoremap <C-s> <Cmd>FuzzyMotion<CR>
+    xnoremap <C-s> <Cmd>FuzzyMotion<CR>
+    let g:fuzzy_motion_labels = [
+      \ "\<C-a>", "\<C-s>", "\<C-d>", "\<C-f>", "\<C-g>", "\<C-h>", "\<C-j>",
+      \ "\<C-k>", "\<C-l>", "\<C-q>", "\<C-w>", "\<C-e>", "\<C-r>", "\<C-t>",
+      \ "\<C-y>", "\<C-u>", "\<C-i>", "\<C-o>", "\<C-p>", "\<C-z>", "\<C-x>",
+      \ "\<C-c>", "\<C-v>", "\<C-b>", "\<C-n>", "\<C-m>" ]
+
+    Plug 'hrsh7th/vim-searchx'
+    nnoremap ? <Cmd>call searchx#run(0)<CR>
+    nnoremap / <Cmd>call searchx#run(1)<CR>
+    xnoremap ? <Cmd>call searchx#run(0)<CR>
+    xnoremap / <Cmd>call searchx#run(1)<CR>
+
+    nnoremap N <Cmd>call searchx#search_prev()<CR>
+    nnoremap n <Cmd>call searchx#search_next()<CR>
+    xnoremap N <Cmd>call searchx#search_prev()<CR>
+    xnoremap n <Cmd>call searchx#search_next()<CR>
+
+    let g:searchx = {}
+    function g:searchx.convert(input) abort
+      if a:input !~# '\k'
+        return '\V' .. a:input
+      endif
+      let l:sep = a:input[0] =~# '[[:alnum:]]' ? '\%([^[:alnum:]]\|^\)\zs' : '\%([[:alnum:]]\|^\)\?\zs'
+      return l:sep .. join(split(a:input, ' '), '.\{-}')
+    endfunction
 
     " ファイル検索
     " 曖昧検索してくれるやつ
@@ -16,8 +44,21 @@ call plug#begin('~/.config/nvim/plugged')
         nmap <Space>q <Cmd>FzfPreviewQuickFixRpc<CR>
         nmap <Space>d <Cmd>FzfPreviewVimLspDiagnosticsRpc<CR>
         nmap <Space>c <Cmd>FzfPreviewCommandPaletteRpc<CR>
-        nmap <Space>r <Cmd>FzfPreviewProjectGrepRpc<CR>
         let g:fzf_preview_history_dir = '~/.config/nvim/.fzf_preview_history'
+
+    " grepだけこっち使う
+    Plug 'junegunn/fzf.vim'
+      let $FZF_DEFAULT_OPTS = "--layout=reverse --info=inline --bind ctrl-b:page-up,ctrl-f:page-down,ctrl-u:up+up+up,ctrl-d:down+down+down"
+      let g:fzf_history_dir = '~/.config/nvim/.fzf_history'
+      let g:fzf_custom_options = ['--preview', 'bat --style=numbers --color=always --line-range :500'.' {}']
+      command! -bang -nargs=* Rg
+        \ call fzf#vim#grep(
+        \   'rg --hidden -g "!{node_modules,.git}" --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+        \   fzf#vim#with_preview({'window': {'width': 0.9,'height': 0.9}}), <bang>0)
+        nmap <Space>r <Cmd>Rg<CR>
+
+    " Git
+    Plug 'lambdalisue/gina.vim'
 
     " LSP
     " LSPを動かすやつ
@@ -27,7 +68,6 @@ call plug#begin('~/.config/nvim/plugged')
         " READMEのコピペ
         function! s:on_lsp_buffer_enabled() abort
             setlocal omnifunc=lsp#complete
-            setlocal signcolumn=yes
             if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
             " 定義ジャンプ
             nmap <buffer> gd <plug>(lsp-definition)
@@ -46,7 +86,7 @@ call plug#begin('~/.config/nvim/plugged')
 
             let g:lsp_format_sync_timeout = 200
             " 保存した時、フォーマット
-            autocmd! BufWritePre *.tsx,*.ts,*.rs,*.go call execute('LspDocumentFormatSync')
+            autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
         endfunction
 
         augroup lsp_install
@@ -56,6 +96,11 @@ call plug#begin('~/.config/nvim/plugged')
 
         " deno を使う場合は必要
         let g:lsp_settings_filetype_typescript = ['typescript-language-server', 'deno']
+        " let g:lsp_diagnostics_echo_cursor = 1
+        let g:lsp_diagnostics_float_cursor = 1
+        " ログ
+        " let g:lsp_log_verbose = 1
+        " let g:lsp_log_file = expand('/tmp/vim-lsp.log')
 
     " カラースキーム
     Plug 'NLKNguyen/papercolor-theme'
@@ -96,11 +141,22 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'preservim/vimux'
         nmap <silent> t<C-n> :TestNearest<CR>
         nmap <silent> t<C-f> :TestFile<CR>
+        nmap <silent> t<C-s> :TestSuite<CR>
         nmap <silent> t<C-l> :TestLast<CR>
         let test#strategy = "vimux"
 
     " Go用のプラグイン
     Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+    " vimdoc翻訳用
+    Plug 'vim-jp/autofmt'
+
+    " シンタックスハイライト
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+    " カッコをうまいことしてくれる
+    Plug 'machakann/vim-sandwich'
+
 call plug#end()
 
 " 文字コード
@@ -140,8 +196,19 @@ colorscheme PaperColor
 " ダークモードを使う
 set background=dark
 
+" vimdoc翻訳用
+" https://github.com/vim-jp/vimdoc-ja-working/wiki/Guide
+setlocal conceallevel=0
+highlight Ignore ctermfg=red
+set formatexpr=autofmt#japanese#formatexpr()
+let autofmt_allow_over_tw = 1
+set formatoptions+=mB
+set smartindent
+syntax match Error /\%>79v.*/
+set colorcolumn=+1
+set spell
+
 " lightspeedのカーソル色をiterm2の色と同じにする
-highlight LightspeedCursor guifg=#FFFFFF guibg=#FFB472
 
 " ultisnipsのスニペットをasyncompleteに渡す
 call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
@@ -156,8 +223,27 @@ command! W update
 " Eから始まるコマンドを作るプラグイン入れると使えなくなるので（easymotionとか)
 command! E Explore
 
-" !とか使わんので、:!に変えとく
-nmap ! :<C-u>!
-
 " 検索のハイライトを消す
 nmap <space>/ <Cmd>nohlsearch<CR>
+
+" vim-sandwichをsurround.vimのキーマップに変更してくれる
+" （sがlightspeedと競合しちゃう)
+runtime macros/sandwich/keymap/surround.vim
+let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+let g:sandwich#recipes += [
+  \   {'buns': ['<', '>'], 'nesting': 1, 'match_syntax': 1, 'kind': ['add', 'replace'], 'action': ['add'], 'input': ['<']}
+  \ ]
+" さらに競合するので、Sを消す
+xmap <C-s> <Plug>(sandwich-add)
+xmap S <Plug>Lightspeed_S
+
+echo "init.vimの実行時間:" reltimestr(reltime(start_time)) "s"
+
+iab cosnt const
+
+augroup lightspeed_colors
+  autocmd!
+  autocmd ColorScheme * highlight LightspeedCursor guifg=#FFFFFF guibg=#FFB472
+augroup END
+
+let g:netrw_banner = 0

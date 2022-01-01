@@ -12,7 +12,7 @@ fi
 # eval "$(anyenv init -)"
 export PATH="$HOME/.anyenv/envs/nodenv/versions/14.18.1/bin/:$PATH"
 export PATH="$HOME/.anyenv/envs/pyenv/versions/3.10.0/bin/:$PATH"
-export PATH="$HOME/.anyenv/envs/rbenv/versions/3.0.2//:$PATH"
+export PATH="$HOME/.anyenv/envs/rbenv/versions/2.7.4/bin/:$PATH"
 
 # flutter のパス設定
 export PATH="$PATH:/usr/local/flutter/bin"
@@ -27,7 +27,7 @@ autoload -Uz compinit
 rm -f ~/.zcompdump; compinit
 
 # 自動提案
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+# source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # gcloudコマンドの設定
 source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
@@ -78,6 +78,8 @@ my-backward-delete-word() {
     local WORDCHARS=${WORDCHARS/\//}
     zle backward-delete-word
 }
+zle -N my-backward-delete-word
+bindkey '^W' my-backward-delete-word
 
 # kubectlで使うエディタ
 export KUBE_EDITOR=nvim
@@ -86,3 +88,6 @@ export KUBE_EDITOR=nvim
 alias vi="nvim"
 alias k="kubectl"
 alias watch="watch "
+alias rm='trash -F'
+
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
