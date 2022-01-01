@@ -2,6 +2,19 @@ if has('nvim')
   set runtimepath+=$HOME/.vim
 endif
 
+" 2文字検索移動
+call plugin#use('easymotion/vim-easymotion')
+  let g:EasyMotion_do_mapping = 0
+  nmap <C-s> <Plug>(easymotion-s2)
+
+" インデント移動
+call plugin#use('haya14busa/vim-edgemotion')
+  map <C-j> <Plug>(edgemotion-j)
+  map <C-k> <Plug>(edgemotion-k)
+
+" gcc でコメントアウト
+call plugin#use('tpope/vim-commentary')
+
 " deno系プラグインを使うためのやつ
 call plugin#use('vim-denops/denops.vim')
 
@@ -135,6 +148,7 @@ call plugin#use("NLKNguyen/papercolor-theme")
   set t_Co=256
   set background=dark
   colorscheme PaperColor
+  set hlsearch
 
 " 文字コード
 lang en_US.UTF-8
@@ -150,7 +164,11 @@ set smarttab
 set expandtab
 
 " vimのヤンクをクリップボードと同期する
-set clipboard=unnamedplus
+if system('uname -s') == "Darwin\n"
+  set clipboard=unnamed "OSX
+else
+  set clipboard=unnamedplus "Linux
+endif
 
 " コマンドラインの補完メニュー
 set wildmenu
