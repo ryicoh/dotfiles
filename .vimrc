@@ -1,3 +1,10 @@
+if has('nvim')
+  set runtimepath+=$HOME/.vim
+endif
+
+" deno系プラグインを使うためのやつ
+call plugin#use('vim-denops/denops.vim')
+
 " LSP
 call plugin#use('prabirshrestha/vim-lsp')
 
@@ -120,15 +127,14 @@ call plugin#use('machakann/vim-sandwich')
 
 " 色
 call plugin#use("NLKNguyen/papercolor-theme")
+  syntax on
+  " デフォルトの256色から、もっとカラフルにするやつ
+  if has('nvim')
+    set termguicolors
+  endif
   set t_Co=256
   set background=dark
   colorscheme PaperColor
-
-if has('nvim')
-  " デフォルトの256色から、もっとカラフルにするやつ
-  set termguicolors
-endif
-syntax on
 
 " 文字コード
 lang en_US.UTF-8
@@ -163,12 +169,6 @@ set nofoldenable
 " vimでdeleteが効くように
 set backspace=indent,eol,start
 
-" :w がどうしても :W になっちゃうので。update は変更があれば書き込んでくれる
-command! W update
-
-" Eから始まるコマンドを作るプラグイン入れると使えなくなるので（easymotionとか)
-command! E Explore
-
 " 検索のハイライトを消す
 nmap <space>/ <Cmd>nohlsearch<CR>
 
@@ -176,4 +176,10 @@ nmap <space>/ <Cmd>nohlsearch<CR>
 let g:netrw_banner = 0
 
 " タイポ対策
-iab cosnt const
+iabbrev cosnt const
+" :w がどうしても :W になっちゃうので。update は変更があれば書き込んでくれる
+cabbrev W update
+
+" tabを>-にする
+set list
+set listchars=tab:>-
