@@ -69,6 +69,7 @@ call plugin#use('yuki-yano/fzf-preview.vim', {"branch": "release/rpc"})
   nmap <space>h <Cmd>FzfPreviewMruFilesRpc<CR>
   nmap <space>f <Cmd>FzfPreviewProjectFilesRpc<CR>
   nmap <space>g <Cmd>FzfPreviewGitActionsRpc<CR>
+  nmap <C-g> <Cmd>FzfPreviewGitActionsRpc<CR>
   nmap <Space>q <Cmd>FzfPreviewQuickFixRpc<CR>
   nmap <Space>d <Cmd>FzfPreviewVimLspDiagnosticsRpc<CR>
   nmap <Space>c <Cmd>FzfPreviewCommandPaletteRpc<CR>
