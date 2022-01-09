@@ -2,10 +2,12 @@ if has('nvim')
   set runtimepath+=$HOME/.vim
 endif
 
-" 2文字検索移動
-call plugin#use('easymotion/vim-easymotion')
+" 2文字移動
   let g:EasyMotion_do_mapping = 0
+call plugin#use('easymotion/vim-easymotion')
   nmap <C-s> <Plug>(easymotion-s2)
+  vmap <C-s> <Plug>(easymotion-s2)
+  command! E Explore
 
 " インデント移動
 call plugin#use('haya14busa/vim-edgemotion')
@@ -94,14 +96,14 @@ call plugin#use('vim-airline/vim-airline')
 
 " スニペット系
 " スニペットのエンジン(Python依存
+" タブとShiftタブでジャンプ
+  let g:UltiSnipsExpandTrigger="<tab>"
+  let g:UltiSnipsJumpForwardTrigger="<tab>"
+  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 call plugin#use('SirVer/ultisnips')
 
 " スニペットがいっぱい入ってるやつ
 call plugin#use('honza/vim-snippets')
-  " タブとShiftタブでジャンプ
-  let g:UltiSnipsExpandTrigger="<tab>"
-  let g:UltiSnipsJumpForwardTrigger="<tab>"
-  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " 補完系
 " 補完するエンジン
@@ -136,8 +138,34 @@ call plugin#use('fatih/vim-go', {'build': ':GoUpdateBinaries'})
 " vimdoc翻訳用
 call plugin#use('vim-jp/autofmt')
 
-" カッコをうまいことしてくれる
+" カッコとか囲う系をうまいことしてくれる
+call plugin#use('cohama/lexima.vim')
 call plugin#use('machakann/vim-sandwich')
+  nmap s <Nop>
+  let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+  let g:sandwich#recipes += [
+  \ {
+  \   'buns': ['InputGenerics()', '">"'],
+  \   'expr': 1,
+  \   'cursor': 'inner_tail',
+  \   'kind': ['add', 'replace'],
+  \   'action': ['add'],
+  \   'input': ['g']
+  \ },
+  \ {
+  \   'external': ['i<', "\<Plug>(textobj-functioncall-generics-a)"],
+  \   'noremap': 0,
+  \   'kind': ['delete', 'replace', 'query'],
+  \   'input': ['g']
+  \ },
+  \ ]
+  function! InputGenerics() abort
+    let genericsname = input('Generics Name: ', '')
+    if genericsname ==# ''
+      throw 'OperatorSandwichCancel'
+    endif
+    return genericsname . '<'
+  endfunction
 
 " 色
 call plugin#use("NLKNguyen/papercolor-theme")
@@ -150,6 +178,33 @@ call plugin#use("NLKNguyen/papercolor-theme")
   set background=dark
   colorscheme PaperColor
   set hlsearch
+
+" base64
+call plugin#use('christianrondeau/vim-base64')
+
+" キャメルとスネークを変える
+call plugin#use('nicwest/vim-camelsnek')
+
+call plugin#use('skanehira/denops-gh.vim')
+
+" 元に戻る
+call plugin#use('Bakudankun/BackAndForward.vim')
+nmap g<C-i> <Cmd>Forward<CR>
+nmap g<C-o> <Cmd>Back<CR>
+
+" \u でUUIDを生成
+call plugin#use('kburdett/vim-nuuid')
+
+" deeplで翻訳
+let s:deepl_auth_key_path = expand("~/.vim/deepl_auth_key.txt")
+if filereadable(s:deepl_auth_key_path)
+  call plugin#use('ryicoh/deepl.vim')
+  "set runtimepath^=~/workspace/deepl.vim
+  let g:deepl#auth_key = readfile(s:deepl_auth_key_path)[0]
+  let g:deepl#endpoint = "https://api-free.deepl.com/v2/translate"
+  vmap t<C-e> <Cmd>call deepl#v("EN")<CR>
+  vmap t<C-j> <Cmd>call deepl#v("JA")<CR>
+endif
 
 " 文字コード
 lang en_US.UTF-8
@@ -193,8 +248,9 @@ let g:netrw_banner = 0
 
 " タイポ対策
 iabbrev cosnt const
+iabbrev reutrn return
 " :w がどうしても :W になっちゃうので。update は変更があれば書き込んでくれる
-cabbrev W update
+command! W update
 
 " tabを>-にする
 set list
@@ -205,7 +261,7 @@ set incsearch
 
 " タイムアウト
 set ttimeout
-set ttimeoutlen=100
+set ttimeoutlen=50
 
 " vimでdeleteが効くように
 set backspace=indent,eol,start
