@@ -3,10 +3,10 @@ if has('nvim')
 endif
 
 " 2文字移動
-  let g:EasyMotion_do_mapping = 0
+let g:EasyMotion_do_mapping = 0
 call plugin#use('easymotion/vim-easymotion')
-  nmap <C-s> <Plug>(easymotion-s2)
-  vmap <C-s> <Plug>(easymotion-s2)
+  nmap <C-l> <Plug>(easymotion-s2)
+  vmap <C-l> <Plug>(easymotion-s2)
   command! E Explore
 
 " インデント移動
@@ -71,7 +71,7 @@ call plugin#use('yuki-yano/fzf-preview.vim', {"branch": "release/rpc"})
   nmap <space>h <Cmd>FzfPreviewMruFilesRpc<CR>
   nmap <space>f <Cmd>FzfPreviewProjectFilesRpc<CR>
   nmap <space>g <Cmd>FzfPreviewGitActionsRpc<CR>
-  nmap <C-g> <Cmd>FzfPreviewGitActionsRpc<CR>
+  " nmap <C-g> <Cmd>FzfPreviewGitActionsRpc<CR>
   nmap <Space>q <Cmd>FzfPreviewQuickFixRpc<CR>
   nmap <Space>d <Cmd>FzfPreviewVimLspDiagnosticsRpc<CR>
   nmap <Space>c <Cmd>FzfPreviewCommandPaletteRpc<CR>
@@ -205,6 +205,9 @@ if filereadable(s:deepl_auth_key_path)
   vmap t<C-e> <Cmd>call deepl#v("EN")<CR>
   vmap t<C-j> <Cmd>call deepl#v("JA")<CR>
 endif
+
+
+call plugin#use("rhysd/vim-grammarous")
 
 " 文字コード
 lang en_US.UTF-8
