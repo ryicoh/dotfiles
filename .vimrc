@@ -5,8 +5,8 @@ endif
 " 2文字移動
 let g:EasyMotion_do_mapping = 0
 call plugin#use('easymotion/vim-easymotion')
-  nmap <C-l> <Plug>(easymotion-s2)
-  vmap <C-l> <Plug>(easymotion-s2)
+  nmap <C-e> <Plug>(easymotion-s2)
+  vmap <C-e> <Plug>(easymotion-s2)
   command! E Explore
 
 " インデント移動
@@ -205,6 +205,9 @@ if filereadable(s:deepl_auth_key_path)
   vmap t<C-e> <Cmd>call deepl#v("EN")<CR>
   vmap t<C-j> <Cmd>call deepl#v("JA")<CR>
 endif
+
+call plugin#use('vim-jp/vimdoc-ja')
+set helplang=ja,en
 
 
 call plugin#use("rhysd/vim-grammarous")

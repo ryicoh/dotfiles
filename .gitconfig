@@ -7,5 +7,6 @@
 	ff = only
 [core]
 	editor = nvim
+	ignorecase = false
 [init]
 	defaultBranch = main

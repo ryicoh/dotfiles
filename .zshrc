@@ -85,7 +85,7 @@ bindkey '^W' my-backward-delete-word
 export KUBE_EDITOR=nvim
 
 # エイリアス
-alias vi="nvim"
+alias vi="nvim -u NORC"
 alias k="kubectl"
 alias watch="watch "
 alias rm='trash -F'
