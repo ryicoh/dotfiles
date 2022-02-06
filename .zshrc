@@ -84,10 +84,17 @@ bindkey '^W' my-backward-delete-word
 # kubectlで使うエディタ
 export KUBE_EDITOR=nvim
 
+# gitで使うエディタ
+export GIT_EDITOR="nvim -u NORC"
+
 # エイリアス
 alias vi="nvim -u NORC"
 alias k="kubectl"
 alias watch="watch "
 alias rm='trash -F'
 
+# Javaへのパス
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+# manをvimで見る
+export MANPAGER="col -b -x | nvim -u NORC"
