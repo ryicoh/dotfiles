@@ -13,6 +13,13 @@ call plugin#use('mattn/vim-lsp-settings')
   nmap [g <plug>(lsp-previous-diagnostic)
   nmap ]g <plug>(lsp-next-diagnostic)
 
+call plugin#use('hrsh7th/vim-vsnip')
+call plugin#use('hrsh7th/vim-vsnip-integ')
+call plugin#use('rafamadriz/friendly-snippets')
+  imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+  smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+  imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+  smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 
 call plugin#use('Shougo/ddc.vim')
   inoremap <silent><expr> <TAB>
@@ -22,15 +29,16 @@ call plugin#use('Shougo/ddc.vim')
   inoremap <expr><S-TAB> ddc#map#pum_visible() ? '<C-p>' : '<C-h>'
 
   call plugin#use('Shougo/ddc-around')
-  call plugin#use('Shougo/ddc-matcher_head')
-  call plugin#use('Shougo/ddc-sorter_rank')
   call plugin#use('shun/ddc-vim-lsp')
-    call ddc#custom#patch_global('sources', ['around', 'vim-lsp'])
+  call plugin#use('tani/ddc-fuzzy')
+    call ddc#custom#patch_global('sources', ['vsnip', 'vim-lsp', 'around'])
     call ddc#custom#patch_global('sourceOptions', {
       \ 'around': {'mark': 'aro'},
+      \ 'vsnip': {'mark': 'sni'},
       \ '_': {
-      \   'matchers': ['matcher_head'],
-      \   'sorters': ['sorter_rank']},
+      \   'matchers': ['matcher_fuzzy'],
+      \   'sorters': ['sorter_fuzzy'],
+      \     'converters': ['converter_fuzzy']},
       \ 'vim-lsp': {
       \   'matchers': ['matcher_head'],
       \   'mark': 'lsp',
