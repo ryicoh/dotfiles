@@ -1,6 +1,7 @@
 /*
 /*/
-!/.config/
+!/.config/nvim
+!/.vim/
 
 !README.md
 !.gitignore

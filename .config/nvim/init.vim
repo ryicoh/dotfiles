@@ -1,1 +1,0 @@
-/Users/ryicoh/.vimrc

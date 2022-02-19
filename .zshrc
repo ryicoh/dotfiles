@@ -1,18 +1,21 @@
 # rustの設定
 # 一応arm64とx86_64の両方設定していたが、armが生き残った
+# if [[ `arch` == 'arm64' ]]; then
+#        export RUSTUP_HOME=$HOME/.rustup-arm64
+#        export CARGO_HOME=$HOME/.cargo-arm64
+#        source $HOME/.cargo-arm64/env
+# fi
+
 if [[ `arch` == 'arm64' ]]; then
-       export RUSTUP_HOME=$HOME/.rustup-arm64
-       export CARGO_HOME=$HOME/.cargo-arm64
-       export PATH="/opt/homebrew/bin":"$PATH"
-       source $HOME/.cargo-arm64/env
+	export PATH="/opt/homebrew/bin":"$PATH"
 fi
 
 # anyenv はいろんな言語のバージョンを管理してくれるやつ
 # 毎回 evalするとすごい遅いので、基本は手動管理
 # eval "$(anyenv init -)"
 export PATH="$HOME/.anyenv/envs/nodenv/versions/14.18.1/bin/:$PATH"
-export PATH="$HOME/.anyenv/envs/pyenv/versions/3.10.0/bin/:$PATH"
-export PATH="$HOME/.anyenv/envs/rbenv/versions/2.7.4/bin/:$PATH"
+export PATH="$HOME/.anyenv/envs/pyenv/versions/3.10.2/bin/:$PATH"
+export PATH="$HOME/.anyenv/envs/rbenv/versions/3.1.0/bin/:$PATH"
 
 # flutter のパス設定
 export PATH="$PATH:/usr/local/flutter/bin"
@@ -22,17 +25,20 @@ export PATH="$PATH":"$HOME/.pub-cache/bin"
 export PATH="$PATH:$HOME/go/bin"
 
 # 補完の設定
-export fpath=(/usr/local/zsh-completions/src $fpath)
-autoload -Uz compinit
-rm -f ~/.zcompdump; compinit
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
 
 # 自動提案
 # source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # gcloudコマンドの設定
-source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+# source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 # gcloudで使うpythonを指定
-export CLOUDSDK_PYTHON=/usr/bin/python
+# export CLOUDSDK_PYTHON=/usr/bin/python
 
 # fzf は曖昧検索してくれるやつ
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -70,6 +76,7 @@ function p() {
     return
   fi
   git push --set-upstream origin `git rev-parse --abbrev-ref HEAD`
+  gh pr create
 }
 
 # <C-w>押した時、/で止まるようにする
@@ -82,19 +89,21 @@ zle -N my-backward-delete-word
 bindkey '^W' my-backward-delete-word
 
 # kubectlで使うエディタ
-export KUBE_EDITOR=nvim
+# export KUBE_EDITOR=nvim
 
 # gitで使うエディタ
-export GIT_EDITOR="nvim -u NORC"
+# export GIT_EDITOR="nvim -u NORC"
 
 # エイリアス
-alias vi="nvim -u NORC"
+# alias vi="nvim -u NORC"
 alias k="kubectl"
 alias watch="watch "
-alias rm='trash -F'
+# alias rm='trash -F'
 
 # Javaへのパス
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 
 # manをvimで見る
-export MANPAGER="col -b -x | nvim -u NORC"
+# export MANPAGER="col -b -x | nvim -u NORC"
+
+eval "$(gh completion -s zsh)"
