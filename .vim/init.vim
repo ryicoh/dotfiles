@@ -16,10 +16,10 @@ call plugin#use('mattn/vim-lsp-settings')
 call plugin#use('hrsh7th/vim-vsnip')
 call plugin#use('hrsh7th/vim-vsnip-integ')
 call plugin#use('rafamadriz/friendly-snippets')
-  imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-  smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-  imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-  smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+  imap <expr> <C-f> vsnip#jumpable(1)  ? '<Plug>(vsnip-jump-next)' : '<C-f>'
+  smap <expr> <C-f> vsnip#jumpable(1)  ? '<Plug>(vsnip-jump-next)' : '<C-f>'
+  imap <expr> <C-b> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<C-b>'
+  smap <expr> <C-b> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<C-b>'
 
 call plugin#use('Shougo/ddc.vim')
   inoremap <silent><expr> <TAB>
@@ -33,16 +33,14 @@ call plugin#use('Shougo/ddc.vim')
   call plugin#use('tani/ddc-fuzzy')
     call ddc#custom#patch_global('sources', ['vsnip', 'vim-lsp', 'around'])
     call ddc#custom#patch_global('sourceOptions', {
-      \ 'around': {'mark': 'aro'},
-      \ 'vsnip': {'mark': 'sni'},
       \ '_': {
       \   'matchers': ['matcher_fuzzy'],
       \   'sorters': ['sorter_fuzzy'],
-      \     'converters': ['converter_fuzzy']},
-      \ 'vim-lsp': {
-      \   'matchers': ['matcher_head'],
-      \   'mark': 'lsp',
+      \   'converters': ['converter_fuzzy'],
       \ },
+      \ 'around': {'mark': 'aro'},
+      \ 'vsnip': {'mark': 'sni'},
+      \ 'vim-lsp': {'mark': 'lsp'},
       \ })
     call ddc#custom#patch_global('sourceParams', {
       \ 'around': {'maxSize': 500},
@@ -65,7 +63,7 @@ syntax enable
 filetype plugin indent on
 colorscheme desert
 
-cmap <C-a> <Home>
-cmap <C-e> <End>
-cmap <C-f> <Right>
-cmap <C-b> <Left>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-f> <Right>
+cnoremap <C-b> <Left>
