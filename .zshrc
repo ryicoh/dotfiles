@@ -13,7 +13,7 @@ fi
 # anyenv はいろんな言語のバージョンを管理してくれるやつ
 # 毎回 evalするとすごい遅いので、基本は手動管理
 # eval "$(anyenv init -)"
-export PATH="$HOME/.anyenv/envs/nodenv/versions/14.18.1/bin/:$PATH"
+export PATH="$HOME/.anyenv/envs/nodenv/versions/16.14.0/bin/:$PATH"
 export PATH="$HOME/.anyenv/envs/pyenv/versions/3.10.2/bin/:$PATH"
 export PATH="$HOME/.anyenv/envs/rbenv/versions/3.1.0/bin/:$PATH"
 
