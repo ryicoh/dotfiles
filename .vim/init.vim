@@ -55,9 +55,8 @@ call plugin#use('vim-test/vim-test')
   let test#strategy = "vimterminal"
 
 
-set wildmenu wildmode=longest:list
-set wildignore+=**/node_modules/**
-set path+=src/**
+set wildignore+=**/node_modules/**,**/build/**,**/storybook-static/**,**/target/**,**/dist/**
+set path+=src/**,pkg/**,cmd/**
 
 syntax enable
 filetype plugin indent on
