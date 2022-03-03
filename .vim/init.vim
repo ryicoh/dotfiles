@@ -9,6 +9,7 @@ call plugin#use('mattn/vim-lsp-settings')
   set signcolumn=yes
   nmap ga <plug>(lsp-code-action)
   nmap gd <plug>(lsp-definition)
+  nmap gr <plug>(lsp-references)
   nmap <leader>rn <plug>(lsp-rename)
   nmap [g <plug>(lsp-previous-diagnostic)
   nmap ]g <plug>(lsp-next-diagnostic)
@@ -54,6 +55,15 @@ call plugin#use('vim-test/vim-test')
   nmap <silent> t<C-l> :<C-u>TestLast<CR>
   let test#strategy = "vimterminal"
 
+let s:deepl_auth_key_path = expand("~/.vim/deepl_auth_key.txt")
+if filereadable(s:deepl_auth_key_path)
+  call plugin#use('ryicoh/deepl.vim')
+  let g:deepl#endpoint = "https://api-free.deepl.com/v2/translate"
+  let g:deepl#auth_key = readfile(s:deepl_auth_key_path)[0]
+  vmap t<C-e> <Cmd>call deepl#v("EN")<CR>
+  vmap t<C-j> <Cmd>call deepl#v("JA")<CR>
+endif
+ 
 
 set wildignore+=**/node_modules/**,**/build/**,**/storybook-static/**,**/target/**,**/dist/**
 set path+=src/**,pkg/**,cmd/**
@@ -61,6 +71,11 @@ set path+=src/**,pkg/**,cmd/**
 syntax enable
 filetype plugin indent on
 colorscheme desert
+
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
+
+let &grepprg = "rg --vimgrep --hidden"
 
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>

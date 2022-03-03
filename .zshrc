@@ -22,6 +22,7 @@ export PATH="$PATH:/usr/local/flutter/bin"
 # flutterのコマンドを使うための設定
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 # go のパス設定
+# export PATH="$HOME/go/bin:$PATH"
 export PATH="$PATH:$HOME/go/bin"
 
 # 補完の設定
