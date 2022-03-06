@@ -37,7 +37,7 @@ call plugin#use('Shougo/ddc.vim')
        \ },
        \ 'around': {'mark': 'aro'},
        \ 'vsnip': {'mark': 'sni'},
-       \ 'vim-lsp': {'mark': 'lsp'},
+       \ 'vim-lsp': {'mark': 'lsp', 'forceCompletionPattern': '\..?'},
        \ 'register': { 'mark': "reg" },
        \ })
 
