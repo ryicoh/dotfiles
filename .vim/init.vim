@@ -1,19 +1,43 @@
-source $VIMRUNTIME/defaults.vim
+if has('nvim')
+  let &runtimepath = "~/.vim," . &runtimepath
+else
+  let &t_SI = "\e[6 q"
+  let &t_EI = "\e[2 q"
+endif
+
+
+let s:default_vim = $VIMRUNTIME."/defaults.vim"
+if filereadable(s:default_vim)
+  exec "source " . s:default_vim
+endif
 
 call plugin#use('vim-denops/denops.vim')
 
+let g:sneak#label = 1
+call plugin#use('ryicoh/vim-sneak')
+" call plugin#use('ryicoh/session.vim')
+" augroup session
+" 	au!
+" 	au VimEnter * call session#restore()
+" 	au VimLeave * call session#save()
+" augroup end
+
 call plugin#use('prabirshrestha/vim-lsp')
-call plugin#use('mattn/vim-lsp-settings')
-  " let g:lsp_settings_filetype_typescript = ['deno']
-  let g:lsp_settings_filetype_typescript = ['deno']
+  let g:lsp_settings = {
+  \   'efm-langserver': {'disabled': v:false}
+  \ }
   let g:lsp_diagnostics_float_cursor = 1
-  set signcolumn=yes
+call plugin#use('mattn/vim-lsp-settings')
+call plugin#use('tsuyoshicho/vim-efm-langserver-settings')
+  " let g:lsp_settings_filetype_typescript = ['deno']
+  let &signcolumn = 'yes'
   nmap ga <plug>(lsp-code-action)
   nmap gd <plug>(lsp-definition)
   nmap gr <plug>(lsp-references)
   nmap <leader>rn <plug>(lsp-rename)
   nmap [g <plug>(lsp-previous-diagnostic)
   nmap ]g <plug>(lsp-next-diagnostic)
+  nmap <buffer> K <plug>(lsp-hover)
 
 call plugin#use('hrsh7th/vim-vsnip')
 call plugin#use('hrsh7th/vim-vsnip-integ')
@@ -48,6 +72,8 @@ call plugin#use('Shougo/ddc.vim')
     inoremap <silent><expr> <S-TAB> ddc#map#pum_visible() ? '<C-p>' : '<C-h>'
     inoremap <silent><expr> <C-x><C-d> ddc#map#manual_complete()
     inoremap <silent><expr> <C-x><C-r> ddc#map#manual_complete(['register'])
+    inoremap <silent><expr> <C-x><C-l> ddc#map#manual_complete(['lsp'])
+    inoremap <silent><expr> <C-x><C-s> ddc#map#manual_complete(['vsnip'])
 
   call ddc#enable()
 
@@ -68,15 +94,15 @@ endif
  
 
 set wildignore+=**/node_modules/**,**/build/**,**/storybook-static/**,**/target/**,**/dist/**
-set path+=src/**,pkg/**,cmd/**
-"set path=**
+set path+=src/**,pkg/**,cmd/**,app/**,~/.vim/**
 
 syntax enable
 filetype plugin indent on
-colorscheme desert
+colorscheme evening
 
-let &t_SI = "\e[6 q"
-let &t_EI = "\e[2 q"
+let &termguicolors = v:true
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
 let &grepprg = "rg --vimgrep --hidden"
 
@@ -84,3 +110,10 @@ cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <C-f> <Right>
 cnoremap <C-b> <Left>
+
+set pumheight=24
+inoremap <expr> <C-u> pumvisible() ? repeat("\<C-p>", 12) : "\<C-u>"
+inoremap <expr> <C-d> pumvisible() ? repeat("\<C-n>", 12) : "\<C-d>"
+
+" call plugin#use("neoclide/coc.nvim", {'branch': 'release'})
+" nmap <silent> gd <Plug>(coc-definition)

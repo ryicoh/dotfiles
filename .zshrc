@@ -77,17 +77,22 @@ function p() {
     return
   fi
   git push --set-upstream origin `git rev-parse --abbrev-ref HEAD`
-  gh pr create
+  prURL=`gh pr create --fill --assignee @me | grep http`
+  open $prURL
 }
 
 # <C-w>押した時、/で止まるようにする
 # https://unix.stackexchange.com/questions/250690/how-to-configure-ctrlw-as-delete-word-in-zsh
-my-backward-delete-word() {
+function my-backward-delete-word() {
     local WORDCHARS=${WORDCHARS/\//}
     zle backward-delete-word
 }
 zle -N my-backward-delete-word
 bindkey '^W' my-backward-delete-word
+
+function run_fg_command() { fg }
+zle -N run_fg_command
+bindkey '^Z' run_fg_command
 
 # kubectlで使うエディタ
 # export KUBE_EDITOR=nvim
@@ -98,7 +103,7 @@ bindkey '^W' my-backward-delete-word
 # エイリアス
 # alias vi="nvim -u NORC"
 alias k="kubectl"
-alias watch="watch "
+alias watch="watch -d "
 # alias rm='trash -F'
 
 # Javaへのパス
@@ -108,3 +113,5 @@ export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 # export MANPAGER="col -b -x | nvim -u NORC"
 
 eval "$(gh completion -s zsh)"
+
+export PATH="/opt/flutter/bin:$PATH"
