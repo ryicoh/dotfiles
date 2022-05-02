@@ -6,6 +6,7 @@
 #        source $HOME/.cargo-arm64/env
 # fi
 
+export HOMEBREW_NO_AUTO_UPDATE=1
 if [[ `arch` == 'arm64' ]]; then
 	export PATH="/opt/homebrew/bin":"$PATH"
 fi
@@ -101,7 +102,7 @@ bindkey '^Z' run_fg_command
 # export GIT_EDITOR="nvim -u NORC"
 
 # エイリアス
-# alias vi="nvim -u NORC"
+alias vi="nvim"
 alias k="kubectl"
 alias watch="watch -d "
 # alias rm='trash -F'
@@ -115,3 +116,11 @@ export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 eval "$(gh completion -s zsh)"
 
 export PATH="/opt/flutter/bin:$PATH"
+
+[ -f "/Users/ryicoh/.ghcup/env" ] && source "/Users/ryicoh/.ghcup/env" # ghcup-env
+export PATH="/opt/homebrew/opt/mysql-client@5.7/bin:$PATH"
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+export PATH="/opt/homebrew/opt/llvm@11/bin:$PATH"
+export PATH="/opt/homebrew/opt/mysql-client@5.7/bin:$PATH"
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+export PATH="/opt/homebrew/opt/llvm@11/bin:$PATH"

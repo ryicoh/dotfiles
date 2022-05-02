@@ -9,3 +9,5 @@
 	ignorecase = false
 [init]
 	defaultBranch = main
+[merge]
+	tool = vimdiff
