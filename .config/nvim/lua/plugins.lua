@@ -38,6 +38,7 @@ require('packer').startup(function()
       require("filer")
     end
   }
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
   use {
     'ggandor/lightspeed.nvim',
@@ -90,5 +91,13 @@ require('packer').startup(function()
       vim.api.nvim_set_keymap('n', '<leader>s', '<Plug>(GitGutterStageHunk)', opts)
       vim.api.nvim_set_keymap('n', '<leader>u', '<Plug>(GitGutterUndoHunk)', opts)
     end,
+  }
+
+  use {
+    'tpope/vim-fugitive'
+  }
+
+  use {
+    'sebdah/vim-delve'
   }
 end)

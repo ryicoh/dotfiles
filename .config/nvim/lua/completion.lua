@@ -73,3 +73,5 @@ cmp.setup({
 vim.g['g:vsnip_filetypes'] = {}
 vim.g['g:vsnip_filetypes.javascriptreact'] = { 'javascript' }
 vim.g['g:vsnip_filetypes.typescriptreact'] = { 'typescript' }
+
+vim.o.completeopt = "menuone,noselect,preview"

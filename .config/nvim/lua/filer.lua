@@ -3,13 +3,15 @@ require('telescope').setup {
   defaults = {
     mappings = {
       i = {
-        ["<esc>"] = actions.close,
+        -- ["<esc>"] = actions.close,
+        ["<C-q>"] = actions.close,
         ["<C-n>"] = actions.cycle_history_next,
         ["<C-p>"] = actions.cycle_history_prev,
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
       }
     },
+    file_sorter = require("telescope.sorters").get_fzy_sorter,
     history = {
       limit = 10000,
     }
@@ -20,10 +22,17 @@ require('telescope').setup {
       require("telescope.themes").get_dropdown {
         -- even more opts
       }
+    },
+    fzf = {
+      fuzzy = true,
+      override_generic_sorter = true,
+      override_file_sorter = true,
+      case_mode = "smart_case",
     }
   }
 }
 
+require('telescope').load_extension('fzf')
 require("telescope").load_extension("ui-select")
 require('telescope').load_extension('live_grep_raw')
 require('telescope').load_extension('gh')

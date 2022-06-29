@@ -77,7 +77,7 @@ function p() {
   if [[ $? -eq 0 ]]; then
     return
   fi
-  git push --set-upstream origin `git rev-parse --abbrev-ref HEAD`
+  git push --set-upstream origin "`git rev-parse --abbrev-ref HEAD`"
   prURL=`gh pr create --fill --assignee @me | grep http`
   open $prURL
 }
@@ -105,6 +105,7 @@ bindkey '^Z' run_fg_command
 alias vi="nvim"
 alias k="kubectl"
 alias watch="watch -d "
+alias g="git"
 # alias rm='trash -F'
 
 # Javaへのパス

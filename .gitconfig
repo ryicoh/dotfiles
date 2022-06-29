@@ -11,3 +11,15 @@
 	defaultBranch = main
 [merge]
 	tool = vimdiff
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[alias]
+  st = status
+  sw = switch
+  l = log
+  d = diff
+  dc = diff --cached
+  r = restore
