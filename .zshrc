@@ -24,7 +24,9 @@ export PATH="$PATH:/usr/local/flutter/bin"
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 # go のパス設定
 # export PATH="$HOME/go/bin:$PATH"
-export PATH="$PATH:$HOME/go/bin"
+export PATH="$HOME/go/bin:$PATH"
+# cargo のパス設定
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # 補完の設定
 if type brew &>/dev/null; then
@@ -96,7 +98,7 @@ zle -N run_fg_command
 bindkey '^Z' run_fg_command
 
 # kubectlで使うエディタ
-# export KUBE_EDITOR=nvim
+export KUBE_EDITOR=nvim
 
 # gitで使うエディタ
 # export GIT_EDITOR="nvim -u NORC"
@@ -125,3 +127,4 @@ export PATH="/opt/homebrew/opt/llvm@11/bin:$PATH"
 export PATH="/opt/homebrew/opt/mysql-client@5.7/bin:$PATH"
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 export PATH="/opt/homebrew/opt/llvm@11/bin:$PATH"
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
