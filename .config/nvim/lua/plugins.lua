@@ -100,4 +100,8 @@ require('packer').startup(function()
   use {
     'sebdah/vim-delve'
   }
+
+  use {
+    'jparise/vim-graphql'
+  }
 end)

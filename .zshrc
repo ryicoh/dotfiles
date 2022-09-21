@@ -99,6 +99,8 @@ bindkey '^Z' run_fg_command
 
 # kubectlで使うエディタ
 export KUBE_EDITOR=nvim
+source <(kubectl completion zsh)
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 
 # gitで使うエディタ
 # export GIT_EDITOR="nvim -u NORC"
@@ -128,3 +130,6 @@ export PATH="/opt/homebrew/opt/mysql-client@5.7/bin:$PATH"
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 export PATH="/opt/homebrew/opt/llvm@11/bin:$PATH"
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+
+export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
