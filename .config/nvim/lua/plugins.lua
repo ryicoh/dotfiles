@@ -27,6 +27,7 @@ require('packer').startup(function()
 
   use {
     'nvim-telescope/telescope.nvim',
+    tag = '0.1.0',
     requires = { {
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',
@@ -85,6 +86,7 @@ require('packer').startup(function()
   use {
     'airblade/vim-gitgutter',
     config = function()
+      vim.g.gitgutter_map_keys = 0
       local opts = { noremap = true, silent = true }
       vim.api.nvim_set_keymap('n', '<leader>n', '<Plug>(GitGutterNextHunk)', opts)
       vim.api.nvim_set_keymap('n', '<leader>p', '<Plug>(GitGutterPrevHunk)', opts)
@@ -103,5 +105,17 @@ require('packer').startup(function()
 
   use {
     'jparise/vim-graphql'
+  }
+
+  use {
+    'vim-jp/autofmt',
+  }
+
+  use {
+    'fatih/vim-go',
+  }
+
+  use {
+    'ConradIrwin/vim-bracketed-paste'
   }
 end)

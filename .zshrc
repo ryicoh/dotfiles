@@ -18,6 +18,8 @@ export PATH="$HOME/.anyenv/envs/nodenv/versions/16.14.0/bin/:$PATH"
 export PATH="$HOME/.anyenv/envs/pyenv/versions/3.10.2/bin/:$PATH"
 export PATH="$HOME/.anyenv/envs/rbenv/versions/3.1.0/bin/:$PATH"
 
+# パス設定
+export PATH="$PATH:/usr/local/bin"
 # flutter のパス設定
 export PATH="$PATH:/usr/local/flutter/bin"
 # flutterのコマンドを使うための設定
@@ -133,3 +135,5 @@ export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 
 export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
+export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"

@@ -3,8 +3,9 @@ require('telescope').setup {
   defaults = {
     mappings = {
       i = {
-        -- ["<esc>"] = actions.close,
+        ["<esc>"] = actions.close,
         ["<C-q>"] = actions.close,
+        ["<C-c>"] = actions.close,
         ["<C-n>"] = actions.cycle_history_next,
         ["<C-p>"] = actions.cycle_history_prev,
         ["<C-j>"] = actions.move_selection_next,
@@ -16,7 +17,6 @@ require('telescope').setup {
       limit = 10000,
     }
   },
-
   extensions = {
     ["ui-select"] = {
       require("telescope.themes").get_dropdown {
@@ -35,7 +35,7 @@ require('telescope').setup {
 require('telescope').load_extension('fzf')
 require("telescope").load_extension("ui-select")
 require('telescope').load_extension('live_grep_args')
-require('telescope').load_extension('gh')
+-- require('telescope').load_extension('gh')
 
 local opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap('n', '<space>f', '<cmd>Telescope find_files<cr>', opts)
