@@ -1,4 +1,14 @@
 local actions = require("telescope.actions")
+
+local function action_n_times(act, times)
+  local acts = act
+  for _ = 1, times do
+    acts = acts + act
+  end
+
+  return acts
+end
+
 require('telescope').setup {
   defaults = {
     mappings = {
@@ -10,6 +20,8 @@ require('telescope').setup {
         ["<C-p>"] = actions.cycle_history_prev,
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
+        ["<C-f>"] = action_n_times(actions.move_selection_next, 10),
+        ["<C-b>"] = action_n_times(actions.move_selection_previous, 10),
       }
     },
     file_sorter = require("telescope.sorters").get_fzy_sorter,

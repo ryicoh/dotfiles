@@ -30,3 +30,5 @@
   d = diff
   dc = diff --cached
   r = restore
+[http]
+	cookiefile = /Users/ryicoh/.gitcookies

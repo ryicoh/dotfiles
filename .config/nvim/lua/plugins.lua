@@ -96,7 +96,10 @@ require('packer').startup(function()
   }
 
   use {
-    'tpope/vim-fugitive'
+    'tpope/vim-fugitive',
+    requires = { {
+      'tpope/vim-rhubarb'
+    } }
   }
 
   use {
@@ -117,5 +120,12 @@ require('packer').startup(function()
 
   use {
     'ConradIrwin/vim-bracketed-paste'
+  }
+  use {
+    'andymass/vim-matchup',
+    config = function()
+      -- may set any options here
+      vim.g.matchup_matchparen_offscreen = { method = "popup" }
+    end
   }
 end)
