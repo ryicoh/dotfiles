@@ -21,3 +21,22 @@ set formatexpr=autofmt#japanese#formatexpr()
 let autofmt_allow_over_tw = 1
 set formatoptions+=mB
 set smartindent
+
+onoremap ib' :<c-u>normal! 2F'vi'<cr>
+onoremap ib" :<c-u>normal! 2F"vi"<cr>
+
+onoremap in{ :<c-u>normal! f{vi{<cr>
+onoremap if{ :<c-u>normal! f{vi{<cr>
+onoremap ib{ :<c-u>normal! F{vi{<cr>
+
+onoremap in[ :<c-u>normal! f[vi[<cr>
+onoremap if[ :<c-u>normal! f[vi[<cr>
+onoremap ib[ :<c-u>normal! F[vi[<cr>
+
+onoremap in< :<c-u>normal! f<vi<<cr>
+onoremap if< :<c-u>normal! f<vi<<cr>
+onoremap ib< :<c-u>normal! F<vi<<cr>
+
+onoremap in( :<c-u>normal! f(vi(<cr>
+onoremap if( :<c-u>normal! f(vi(<cr>
+onoremap ib( :<c-u>normal! F(vi(<cr>

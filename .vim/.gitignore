@@ -2,3 +2,4 @@ autoload/
 plugins/
 .netrwhist
 deepl_auth_key.txt
+*.back

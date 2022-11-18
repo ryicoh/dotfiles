@@ -128,4 +128,8 @@ require('packer').startup(function()
       vim.g.matchup_matchparen_offscreen = { method = "popup" }
     end
   }
+
+  use {
+    'tpope/vim-surround',
+  }
 end)
